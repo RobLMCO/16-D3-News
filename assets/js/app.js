@@ -52,7 +52,7 @@ d3.csv("/assets/data/data.csv", function(err, csv_data) {
   
       var toolTip = d3
         .tip()
-        .attr('class', 'tooltip')
+        .attr('class', 'd3-tip')
         .offset([0, 0])
         .html(function(data) {
             var state = data.state;
@@ -63,6 +63,7 @@ d3.csv("/assets/data/data.csv", function(err, csv_data) {
             '<strong>' + state + '<br> Healthcare: ' + healthcare + '%' + '<br> Obesity: ' + obesity + '%' + '<br> Smoking: ' + smokes + "% </strong><span style='color:red'>"
             )
         });
+      svg.call(toolTip);
   
       chartGroup.call(toolTip);
       chartGroup
@@ -76,19 +77,12 @@ d3.csv("/assets/data/data.csv", function(err, csv_data) {
       .attr('cy', function(data, index) {
         return yLinearScale(data.smokes);
       })
-      .attr('r', '16')
-      .attr('fill', 'lightgreen')
+      .attr('r', '12')
+      .attr('fill', 'skyblue')
       .attr('fill-opacity',0.6)
     
       .on('mouseover', function(data) {
-        debugger;
-        var xpos = data.obesity;
-        var ypos = data.smokes;
-
-        toolTip.show(data).attr("position", "absolute")
-        .style("center", "16px")
-        .style("right","860px");
-        
+        toolTip.show(data);
       })
 
       .on("mouseout", function(data, index) {
